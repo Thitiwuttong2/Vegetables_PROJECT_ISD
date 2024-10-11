@@ -1,0 +1,181 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body style="background-color: #DAFFDB; font-family:'Arimo', sans-serif;"">
+    <header>
+        <div class="nav">
+            <div style="display: flex; gap:1vw; align-items: center;">
+                <img src="/static/image/logo.jpg" alt="" style="width: 100%; height: 4vh; padding-left: 7px;">
+            </div>
+            <ul>
+                <li><a href="/predict" style="text-decoration-line: underline;">Predict</a></li>
+                <li><a class="active" href="#Result">Result</a></li>
+                <li><a href="#Nutrition">Nutrition</a></li>
+                <li><a href="#Menu">Menu</a></li>
+                <li><a href="#Selection">Selection</a></li>
+            </ul>
+        </div>
+    </header>
+    <div class="result" id="Result">
+        <div class="two_div">
+            <div class="pic">
+                {% if prediction %}
+                    <img src="{{img_path}}">
+                {% endif %}
+            </div>
+        </div>
+        <div class="two_div">
+            <div class="pic__bg_result">
+                <img src="/static/image/bg_bucket.png" alt="" class="bg_bucket" style="height: 140px; width: auto; padding-bottom: 30px;">
+                <img src="/static/image/bg_result.png" alt="" class="bg_no_rps">
+            </div>
+           
+            {% if prediction %}
+            <p class="result_model">Result : {{prediction}}</p>
+            {% endif %}
+            <p class="accurency">Accuracy : {{percent}}</p>
+            <img src="/static/image/bg_result.png" alt="" class="bg_result_rps">
+        </div>
+    </div>
+    <div class="database">
+        <div class="three_sec">
+            <div class="click">
+                <a href="#Nutrition" class="choice rounded-top-4">Nutrition</a>
+                <a href="#Menu" class="choice rounded-top-4">Menu</a>
+                <a href="#Selection" class="choice rounded-top-4">Selection</a>
+            </div>    
+            <div class="content rounded-bottom-4 rounded-top-2">
+                <div class="content1" id="Nutrition">
+                    {% if vegetable %}
+                        {% if vegetable.image %}
+                        <img src="data:image/jpeg;base64,{{ vegetable.image }}" alt="">
+                        {% endif %}
+                        <p class="head_p">Nutrition</p>
+                        <div class="content_div">
+                            <p class="head_2">Health Benefits</p>
+                            {% if formatted_benefits %}
+                                {% for benefit in formatted_benefits %}
+                                    <p>{{ benefit }}</p>
+                                {% endfor %}
+                            {% endif %}
+                            <p class="head_2">Minerals</p>
+                            <p>{{ minerals_details | safe}}</p>
+                            <p class="head_2">Fiber</p>
+                            <p>{{ vegetable.fiber }}</p>
+                            <p class="head_2">Calories</p>
+                            <p>{{ vegetable.calories }}</p>
+                        </div>
+                    {% else %}
+                        <p>No vegetable information available.</p>
+                    {% endif %}
+                </div>
+                <div class="content2" id="Menu">
+                    <p class="head_p">Menu suggestion</p>
+                    <div class="pic1">
+                        <div class="picture1">
+                            <div class="image">
+                                {% if vegetable.menu1_pic %}
+                                    <a href="{{ vegetable.link1 }}">
+                                        <img src="data:image/jpeg;base64,{{ vegetable.menu1_pic }}">
+                                    </a>
+                                {% endif %}
+                            </div>
+                            {% if vegetable %}
+                            <div class="flex-p">{{ vegetable.menu1_name }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="picture1">
+                            <div class="image">
+                                {% if vegetable.menu2_pic %}
+                                    <a href="{{ vegetable.link2 }}">
+                                        <img src="data:image/jpeg;base64,{{ vegetable.menu2_pic }}">
+                                    </a>
+                                {% endif %}
+                            </div>
+                            {% if vegetable %}
+                            <div class="flex-p">{{ vegetable.menu2_name }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="picture1">
+                            <div class="image">
+                                {% if vegetable.menu3_pic %}
+                                    <a href="{{ vegetable.link3 }}">
+                                        <img src="data:image/jpeg;base64,{{ vegetable.menu3_pic }}">
+                                    </a>
+                                {% endif %}
+                            </div>
+                            {% if vegetable %}
+                            <div class="flex-p">{{ vegetable.menu3_name }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="pic1">
+                        <div class="picture1">
+                            <div class="image">
+                                {% if vegetable.menu4_pic %}
+                                    <a href="{{ vegetable.link4 }}">
+                                        <img src="data:image/jpeg;base64,{{ vegetable.menu4_pic }}">
+                                    </a>
+                                {% endif %}
+                            </div>
+                            {% if vegetable %}
+                            <div class="flex-p">{{ vegetable.menu4_name }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="picture1">
+                            <div class="image">
+                                {% if vegetable.menu5_pic %}
+                                    <a href="{{ vegetable.link5 }}">
+                                        <img src="data:image/jpeg;base64,{{ vegetable.menu5_pic }}">
+                                    </a>
+                                {% endif %}
+                            </div>
+                            {% if vegetable %}
+                            <div class="flex-p">{{ vegetable.menu5_name }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="picture1">
+                            <div class="image">
+                                {% if vegetable.menu6_pic %}
+                                    <a href="{{ vegetable.link6 }}">
+                                        <img src="data:image/jpeg;base64,{{ vegetable.menu6_pic }}">
+                                    </a>
+                                {% endif %}
+                            </div>
+                            {% if vegetable %}
+                            <div class="flex-p">{{ vegetable.menu6_name }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="content3" id="Selection">
+                    {% if vegetable %}
+                        <p class="head_p">Selection</p>
+                        <div class="content_div">
+                            <p class="head_2">How to Choose:</p>
+                            {% for htc in formatted_howtochoose %}
+                                <p>{{ htc }}</p>
+                            {% endfor %}
+                            <p class="head_2">Storage:</p>
+                            <p>{{ vegetable.storage }}</p>
+                            <p class="head_2">Best Season:</p>
+                            <p>{{ vegetable.best_season }}</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>© 2024 VeggieVision. All Rights Reserved</p>
+    </footer>
+</body>
+</html>
